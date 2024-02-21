@@ -12,7 +12,7 @@ impl Qubit {
     }
 
     // Apply a Hadamard gate to the qubit
-    pub fn hadamard_gate(&mut self) {
+    pub fn hadamard_transformation(&mut self) {
         // Hadamard gate matrix
         let h = 1.0 / 2.0f64.sqrt();
         let (alpha, beta) = (self.alpha, self.beta);
@@ -23,7 +23,7 @@ impl Qubit {
     }
 
     // Apply a pauli_x_gate to the circuit
-    pub fn pauli_x_gate(&mut self) {
+    pub fn pauli_x_transformation(&mut self) {
         // Pauli-X gate matrix
         let (alpha, beta) = (self.alpha, self.beta);
         self.alpha = beta;
@@ -46,6 +46,14 @@ impl Qubit {
             // Measurement outcome is |1⟩
             self.alpha = 0.0;
             self.beta = 1.0;
+        }
+
+        if self.alpha == 0.0 {
+            println!("|0>");
+        } else if self.alpha == 1.0 {
+            println!("|1>");
+        } else {
+            println!("Qubit did not collapse to either a |0> or |1> state upon measurement");
         }
     }
     

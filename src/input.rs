@@ -10,9 +10,6 @@ pub fn get_inputs() -> Vec<String> {
     // Prompt the user for input
     println!("_______________Build your quantum circuit_______________");
     println!("__Input QC(N) where N is the number of qubits you want__");
-    println!("____Input NH to add a hadamard gate to the Nth Qubit____");
-    println!("_____Input NX to add a PauliX gate to the Nth Qubit_____");
-    println!("Input next to go to the next node in the quantum circuit");
 
     loop {
         io::stdout().flush().unwrap();
@@ -61,6 +58,26 @@ pub fn get_inputs() -> Vec<String> {
                     }
                 }
             }
+            "run" => {
+                match quantum_circuit_option {
+                    None => {
+                        println!{"The quantum circuit has not been initialised with a number of qubits. Use QC(N) to create a quantum circuit with N qubits where N is an integer"};
+                    }
+                    Some(ref mut quantum_circuit) => {
+                        quantum_circuit.run_circuit();
+                    }
+                } 
+            }
+            "debug" => {
+                match quantum_circuit_option {
+                    None => {
+                        println!{"The quantum circuit has not been initialised with a number of qubits. Use QC(N) to create a quantum circuit with N qubits where N is an integer"};
+                    }
+                    Some(ref mut quantum_circuit) => {
+                        quantum_circuit.run_circuit_with_debug();
+                    }
+                } 
+            }
             "end" => break,
             _ => println!("Error: Invalid input privided"),
         }
@@ -105,6 +122,7 @@ fn add_gate(quantum_circuit: &mut QuantumCircuit, gate_to_be_added: String) -> &
         let new_gate = match new_gate_str {
             "H" => QuantumGate::Hadamard,
             "X" => QuantumGate::PauliX,
+            "M" => QuantumGate::Measurement,
             _ => {
                 println!("Unknown gate: {}", new_gate_str);
                 return quantum_circuit;
