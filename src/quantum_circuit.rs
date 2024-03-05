@@ -1,4 +1,9 @@
+use std::usize;
+
 use crate::qubit::Qubit;
+
+// TODO Create a way of recording measurements when their taken along with their position within the qubit matrix
+pub static mut MEASUREMENT_MATRIX: Option<Vec<Vec<Option<String>>>> = None;
 
 #[derive(Debug)]
 pub enum QuantumGate {
@@ -8,7 +13,7 @@ pub enum QuantumGate {
 }
 
 impl QuantumGate {
-    pub fn apply(&self, qubit: &mut Qubit) {
+    pub fn apply(&self, qubit: &mut Qubit, qubit_line: &QubitLine, node_index: usize) {
         match self {
             QuantumGate::Hadamard => qubit.hadamard_transformation(),
             QuantumGate::PauliX => qubit.pauli_x_transformation(),
@@ -73,7 +78,7 @@ impl QuantumCircuit {
                 // Get the gate option of each node and unwrap it. Apply the gate if it's not None to the correct qubit
                 if let Some(gate_option) = qubit_line.gates.get(column_index) {
                     if let Some(gate) = gate_option {
-                        gate.apply(&mut self.qubits[qubit_index]);
+                        gate.apply(&mut self.qubits[qubit_index], qubit_line, column_index);
                     }
                 }
             }
@@ -91,7 +96,7 @@ impl QuantumCircuit {
                 // Get the gate option of each node and unwrap it. Apply the gate if it's not None to the correct qubit
                 if let Some(gate_option) = qubit_line.gates.get(column_index) {
                     if let Some(gate) = gate_option {
-                        gate.apply(&mut self.qubits[qubit_index]);
+                        gate.apply(&mut self.qubits[qubit_index], &qubit_line, column_index);
                         println!("Gate {:?} applied to qubit {:?}", gate, qubit_index);
                     }
                 }
