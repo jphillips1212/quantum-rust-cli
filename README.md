@@ -1,15 +1,12 @@
-# quantum-rust-cli
+<h1 align="center">
 
-quantum-rust-cli is a command line interface for creating quantum circuits directly in the terminal and then running them. It can support up to 9 qubits at a time as well as a number of gates for each. 
+quantum-rust-cli
 
-Currently the only gates supported are Hadamard Gates and Pauli-X Gates but I'm planning to expand it to other Pauli gates aswell as CNOT gates that link qubits together (contributions are welcome!). There is also no current way to measure the qubit at any point without directly interacting with the code, this is the next step. 
+</h1>
 
-# How to run
-
-Clone the repo and from the root directory run `cargo run`.
-
-=======
-# quantum-rust-cli
+<div align="center">
+    <img src="quantum_crab.png" alt="Quantum Crab" width="400"/>
+</div>
 
 quantum-rust-cli is a command line interface for creating quantum circuits directly in the terminal and then running them. It can support up to 9 qubits at a time as well as a number of gates for each. 
 
